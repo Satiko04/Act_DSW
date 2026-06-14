@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Biblioteca - CRUD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Biblioteca Central</h1>
+        <p>Gestão e Consulta do Acervo de Livros</p>
+
+        <div id="auth-container" class="auth-container">
+            <button id="btn-login-google" type="button">Entrar com Google</button>
+            <div id="user-info" class="hidden">
+                <img id="user-photo" src="" alt="Foto do usuário" width="40">
+                <span id="user-nome"></span>
+                <button id="btn-logout" type="button">Sair</button>
+            </div>
+        </div>
+
+        <div id="feedback-msg" class="hidden"></div>
+
+        <p class="aviso-login hidden" id="aviso-login">Faça login com Google para cadastrar, editar ou excluir livros.</p>
+
+        <div class="form-cadastro-container hidden" id="form-cadastro-container">
+            <h2 id="form-titulo">Cadastrar Livro</h2>
+            <form id="crud-form">
+                <input type="hidden" id="crud-id">
+                
+                <input type="text" id="crud-titulo" placeholder="Título do livro" required>
+                <input type="text" id="crud-autor" placeholder="Autor do livro" required>
+                
+                <select id="crud-genero" required>
+                    <option value="" disabled selected>Selecione o Gênero</option>
+                    <option value="fantasia">Fantasia</option>
+                    <option value="ficcao">Ficção Científica</option>
+                    <option value="romance">Romance</option>
+                    <option value="terror">Terror</option>
+                    <option value="misterio">Mistério / Policial</option>
+                    <option value="tecnico">Técnico / Acadêmico</option>
+                    <option value="biografia">Biografia</option>
+                    <option value="infantil">Infantil</option>
+                </select>
+
+                <select id="crud-status" required>
+                    <option value="disponivel">Disponível</option>
+                    <option value="emprestado">Emprestado</option>
+                    <option value="manutencao">Manutenção</option>
+                </select>
+
+                <input type="text" id="crud-sinopse" placeholder="Breve sinopse...">
+                
+                <button type="submit" id="btn-salvar">Salvar</button>
+                <button type="button" id="btn-cancelar" class="hidden">Cancelar</button>
+            </form>
+        </div>
+
+        <hr style="border-color: #333; margin: 30px 0;">
+
+        <form id="filtro-form">
+            <input type="text" id="busca" placeholder="Buscar por título...">
+            <input type="text" id="busca-autor" placeholder="Buscar por autor...">
+            
+            <select id="status">
+                <option value="Todos">Todos os Status</option>
+                <option value="disponivel">Disponível</option>
+                <option value="emprestado">Emprestado</option>
+                <option value="manutencao">Manutenção</option>
+            </select>
+
+            <select id="genero">
+                <option value="Todos">Todos os Gêneros</option>
+                <option value="fantasia">Fantasia</option>
+                <option value="ficcao">Ficção Científica</option>
+                <option value="romance">Romance</option>
+                <option value="terror">Terror</option>
+                <option value="misterio">Mistério / Policial</option>
+                <option value="tecnico">Técnico / Acadêmico</option>
+                <option value="biografia">Biografia</option>
+                <option value="infantil">Infantil</option>
+            </select>
+
+            <button type="submit" id="btn-buscar">Buscar</button>
+            <button type="button" id="btn-limpar">Limpar Filtros</button>
+        </form>
+
+        <div id="loading" class="hidden">Carregando acervo...</div>
+        <div id="error-msg" class="hidden error">Erro ao conectar com o servidor.</div>
+
+        <p>Total encontrados: <span id="total-resultados">0</span></p>
+
+        <table id="tabela-livros">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Gênero</th>
+                    <th>Status</th>
+                    <th>Sinopse</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="lista-livros">
+                </tbody>
+        </table>
+    </div>
+    <script type="module" src="auth.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

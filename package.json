@@ -1,0 +1,20 @@
+{
+  "name": "lab-empresta",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot server.js"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "firebase-admin": "^14.0.0"
+  }
+}
