@@ -1,6 +1,5 @@
 # lab-empresta
 
-Alunos: João Gabriel de Jesus Pires Quintanilha, Giselli Satiko Toyomoto Fujimori
 
 To install dependencies:
 
