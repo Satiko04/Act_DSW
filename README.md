@@ -6,8 +6,8 @@ Aplicação web para gestão do acervo de livros de uma biblioteca, com CRUD com
 
 ## Integrantes
 
-| Nome | GitHub |
-|------|--------|
+| Nome |
+|------|
 | Giselli Satiko Fujimori 
 | João Gabriel de Jesus Pires Quintanilha
 
