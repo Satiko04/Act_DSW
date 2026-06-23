@@ -8,9 +8,9 @@ Aplicação web para gestão do acervo de livros de uma biblioteca, com CRUD com
 
 | Nome | GitHub |
 |------|--------|
-| Giselli Satiko Fujimori | [@GiselliFujimori](https://github.com/GiselliFujimori) |
-| _(Integrante 2)_ | — |
-| _(Integrante 3)_ | — |
+| Giselli Satiko Fujimori 
+| João Gabriel de Jesus Pires Quintanilha
+
 
 ---
 
