@@ -9,8 +9,7 @@ const userNome = document.getElementById('user-nome');
 const formCadastroContainer = document.getElementById('form-cadastro-container');
 const avisoLogin = document.getElementById('aviso-login');
 
-// Token do usuário logado, usado pelo app.js para autenticar
-// as requisições de criação/edição/exclusão de livros.
+// Token do usuário logado, usado pelo app.js para autenticar requisições de escrita
 window.authToken = null;
 
 btnLoginGoogle.addEventListener('click', async () => {
@@ -26,9 +25,10 @@ btnLogout.addEventListener('click', async () => {
     await signOut(auth);
 });
 
-// Atualiza a interface sempre que o estado de login mudar
+// Atualiza a UI sempre que o estado de autenticação mudar
 onAuthStateChanged(auth, async (user) => {
     if (user) {
+        // Renova o token (expira em 1h) e mantém em memória para app.js
         window.authToken = await user.getIdToken();
 
         btnLoginGoogle.classList.add('hidden');

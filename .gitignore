@@ -1,5 +1,6 @@
-# dependencies (bun install)
+# dependencies
 node_modules
+backend/node_modules
 
 # output
 out
@@ -33,4 +34,9 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 
+# credenciais sensíveis — nunca versionar
 serviceAccountKey.json
+backend/serviceAccountKey.json
+
+# variáveis de ambiente
+backend/.env

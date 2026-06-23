@@ -44,9 +44,15 @@ function mostrarFeedback(msg, tipo = 'success') {
     setTimeout(() => feedbackMsg.classList.add('hidden'), 4000);
 }
 
+function getAuthHeaders() {
+    const headers = { 'Content-Type': 'application/json' };
+    if (window.authToken) headers['Authorization'] = `Bearer ${window.authToken}`;
+    return headers;
+}
+
 crudForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const id = document.getElementById('crud-id').value;
     const titulo = document.getElementById('crud-titulo').value;
     const autor = document.getElementById('crud-autor').value;
@@ -56,24 +62,18 @@ crudForm.addEventListener('submit', async (e) => {
 
     const payload = { titulo, autor, genero, status, sinopse };
 
-    // Cabeçalhos com token do Firebase, exigido pelas rotas POST/PUT
-    const headers = { 'Content-Type': 'application/json' };
-    if (window.authToken) {
-        headers['Authorization'] = `Bearer ${window.authToken}`;
-    }
-
     try {
         let response;
         if (id) {
             response = await fetch(`/livros/${id}`, {
                 method: 'PUT',
-                headers,
+                headers: getAuthHeaders(),
                 body: JSON.stringify(payload)
             });
         } else {
             response = await fetch('/livros', {
                 method: 'POST',
-                headers,
+                headers: getAuthHeaders(),
                 body: JSON.stringify(payload)
             });
         }
@@ -85,7 +85,7 @@ crudForm.addEventListener('submit', async (e) => {
 
         mostrarFeedback(id ? 'Livro atualizado com sucesso!' : 'Livro cadastrado com sucesso!');
         cancelarEdicao();
-        buscarLivros(); 
+        buscarLivros();
 
     } catch (error) {
         mostrarFeedback(error.message, 'error');
@@ -104,15 +104,15 @@ window.editarLivro = async (id) => {
     try {
         const response = await fetch(`/livros/${id}`);
         if (!response.ok) throw new Error('Livro não encontrado');
-        
+
         const l = await response.json();
-        
+
         document.getElementById('crud-id').value = l.id;
         document.getElementById('crud-titulo').value = l.titulo;
         document.getElementById('crud-autor').value = l.autor;
         document.getElementById('crud-genero').value = l.genero;
         document.getElementById('crud-status').value = l.status;
-        document.getElementById('crud-sinopse').value = l.sinopse;
+        document.getElementById('crud-sinopse').value = l.sinopse || '';
 
         formTitulo.textContent = `Editar Livro (ID: ${l.id})`;
         btnCancelar.classList.remove('hidden');
@@ -127,9 +127,8 @@ window.excluirLivro = async (id) => {
 
     try {
         const headers = {};
-        if (window.authToken) {
-            headers['Authorization'] = `Bearer ${window.authToken}`;
-        }
+        if (window.authToken) headers['Authorization'] = `Bearer ${window.authToken}`;
+
         const response = await fetch(`/livros/${id}`, { method: 'DELETE', headers });
         if (!response.ok) throw new Error('Erro ao excluir livro');
 
@@ -142,7 +141,7 @@ window.excluirLivro = async (id) => {
 
 async function buscarLivros() {
     const parametros = new URLSearchParams();
-    
+
     const busca = inputBusca.value.trim();
     const autor = inputAutorBusca.value.trim();
     const status = selectStatus.value;
@@ -163,10 +162,10 @@ async function buscarLivros() {
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Servidor retornou erro');
-        
+
         const data = await response.json();
         spanTotal.textContent = data.total;
-        
+
         if (data.total === 0) {
             tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Nenhum livro encontrado.</td></tr>';
             return;
@@ -180,7 +179,7 @@ async function buscarLivros() {
                 <td>${l.autor}</td>
                 <td style="text-transform: capitalize;">${l.genero}</td>
                 <td><span class="badge ${l.status}">${l.status}</span></td>
-                <td><small>${l.sinopse}</small></td>
+                <td><small>${l.sinopse || ''}</small></td>
                 <td class="td-acoes">
                     <button onclick="editarLivro(${l.id})" class="btn-editar">Editar</button>
                     <button onclick="excluirLivro(${l.id})" class="btn-excluir">Excluir</button>
@@ -198,5 +197,4 @@ async function buscarLivros() {
     }
 }
 
-// Inicia buscando todos
 buscarLivros();

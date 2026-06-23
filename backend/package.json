@@ -1,9 +1,10 @@
 {
-  "name": "lab-empresta",
-  "module": "index.ts",
+  "name": "biblioteca-backend",
+  "module": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "bun --hot server.js"
+    "dev": "bun --hot server.js",
+    "start": "bun server.js"
   },
   "private": true,
   "devDependencies": {
@@ -14,7 +15,9 @@
   },
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^16.4.5",
     "express": "^5.2.1",
-    "firebase-admin": "^14.0.0"
+    "firebase-admin": "^14.0.0",
+    "mysql2": "^3.11.0"
   }
 }
